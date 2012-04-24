@@ -21,7 +21,7 @@ fromPrior <- function(dimensions=20)
 # likelihood function.
 logLikelihood <- function(params)
 {
-	logP <- -0.5*sum(params^2)	
+	logP <- -0.5*sum(params**2)	
 }
 
 
