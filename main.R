@@ -1,11 +1,13 @@
-#
+# Main executable for affine-invariant Nested Sampling
 source('model.R')
 
-params <- fromPrior(dimensions=20)
-logP <- logPrior(params)
-logL <- logLikelihood(params)
+numDimensions = as.integer(20)
+numWalkers = as.integer(10)
 
-print(params)
-print(logP)
-print(logL)
+# Initialise the walkers from the prior
+walkers <- array(NA, c(numWalkers, numDimensions))
+for(i in 1:numWalkers)
+	walkers[i, ] = fromPrior(numDimensions)
+
+
 
