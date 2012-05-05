@@ -2,8 +2,9 @@
 # This just targets the posterior using emcee-style stretch moves
 source('model.R')
 
-numDimensions <- as.integer(10)
 numWalkers <- as.integer(100)
+if(numDimensions >= numWalkers)
+	print('WARNING: Use more walkers!')
 
 # Initialise the walkers from the prior
 walkers <- array(NA, c(numWalkers, numDimensions)) # Empty array
@@ -20,7 +21,7 @@ for(i in 1:numWalkers)
 
 # MCMC parameters
 steps <- as.integer(1000000)
-skip <- as.integer(1000)
+skip <- as.integer(100)
 
 # Storage
 keep <- array(NA, c(steps/skip, numDimensions))
@@ -37,10 +38,13 @@ for(i in 1:steps)
 	if(i%%skip == 0)
 	{
 		keep[(i/skip), ] <- walkers[which, ]
+
+		# Trace plot of first parameter
 		plot(keep[1:(i/skip), 1], type='l', xlab='Time', ylab='Value')
 		print('Acceptance Ratio: ')
 		print(as.double(accepts)/tries)
 
+		# Ad-hoc burn-in discard
 		start = 1. + 0.25*(i/skip)
 		print('Mean of last 75% of run: ')
 		print(mean(keep[start:(i/skip), 1]))
@@ -60,8 +64,9 @@ for(i in 1:steps)
 	logL_proposal <- logLikelihood(proposal)
 
 	# Calculate acceptance probability
-	logA <- (logP_proposal - logP[which]) + (logL_proposal - logL[which])
-			+ (numDimensions - 1)*log(Z)
+	logA <- logP_proposal - logP[which]
+	logA <- logA + logL_proposal - logL[which]
+	logA <-	logA + (numDimensions - 1)*log(Z)
 	if(logA > 0.)
 		logA = 0.
 
