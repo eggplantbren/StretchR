@@ -1,6 +1,6 @@
 # Main executable for affine-invariant sampling
 # This just targets the posterior using emcee-style stretch moves
-source('model.R')
+source('Model.R')
 
 numWalkers <- as.integer(100)
 if(numDimensions >= numWalkers)
@@ -14,7 +14,7 @@ logL <- array(NA, c(numWalkers, 1)) # logLikelihood values
 # Fill the array. Each row is a walker
 for(i in 1:numWalkers)
 {
-	walkers[i, ] <- fromPrior(numDimensions)
+	walkers[i, ] <- startingPoint()
 	logP[i] <- logPrior(walkers[i, ])
 	logL[i] <- logLikelihood(walkers[i, ])
 }
