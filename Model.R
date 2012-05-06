@@ -6,7 +6,7 @@ numDimensions <- as.integer(10)
 logPrior <- function(params)
 {
 	result <- 0.
-	if(any(params < 0 || params > 1))
+	if(any(params < 0 | params > 1))
 		result <- -Inf
 	return(result) 
 }
