@@ -1,6 +1,6 @@
 # Main executable for affine-invariant sampling
 # This just targets the posterior using emcee-style stretch moves
-source('Model.R')
+source('model.r')
 
 numWalkers <- as.integer(100)
 if(numDimensions >= numWalkers)
