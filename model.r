@@ -1,12 +1,12 @@
 # This file contains functions that define what model we're working on.
-numDimensions <- as.integer(10)
+numDimensions <- as.integer(100)
 
 # Given a vector of parameters, evaluate the natural logarithm of the prior
 # probability density.
 logPrior <- function(params)
 {
 	result <- 0.
-	if(any(params < 0 | params > 1))
+	if(any(params < -10 | params > 10))
 		result <- -Inf
 	return(result) 
 }
@@ -15,7 +15,7 @@ logPrior <- function(params)
 # for starting an MCMC chain.
 startingPoint <- function()
 {
-	params <- runif(numDimensions)
+	params <- -10. + 20.*runif(numDimensions)
 	return(params)
 }
 
@@ -23,7 +23,9 @@ startingPoint <- function()
 # likelihood function.
 logLikelihood <- function(params)
 {
-	logL <- -0.5*sum(((params - 0.5)/0.01)^2)
+	alpha = 0.95
+	logL <- -0.5*params[1]**2
+	logL = logL - 0.5*sum((params[2:numDimensions] - params[1:numDimensions-1])**2)/(1. - alpha**2)
 	return(logL)
 }
 
