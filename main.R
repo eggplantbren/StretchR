@@ -21,7 +21,7 @@ for(i in 1:numWalkers)
 
 # MCMC parameters
 steps <- as.integer(200000*numWalkers)
-skip <- as.integer(100)
+skip <- as.integer(1000)
 
 # Storage
 keep <- array(NA, c(steps/skip, numDimensions))
@@ -40,7 +40,9 @@ for(i in 1:steps)
 		keep[(i/skip), ] <- walkers[which, ]
 
 		# Trace plot of first parameter
-		plot(keep[1:(i/skip), 1], type='l', xlab='Time', ylab='Value')
+		plot(seq(1, i/skip)/(steps/skip)*100,
+             keep[1:(i/skip), 1],
+             type='l', xlab='% complete', ylab='Value')
 		print('Acceptance Ratio: ')
 		print(as.double(accepts)/tries)
 
