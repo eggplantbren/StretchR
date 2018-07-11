@@ -1,5 +1,5 @@
 # This file contains functions that define what model we're working on.
-numDimensions <- as.integer(50)
+numDimensions <- as.integer(10)
 
 # Given a vector of parameters, evaluate the natural logarithm of the prior
 # probability density.
@@ -23,7 +23,7 @@ startingPoint <- function()
 # likelihood function.
 logLikelihood <- function(params)
 {
-	alpha = 0.95
+	alpha = 0.9
 	logL <- -0.5*params[1]**2
 	logL = logL - 0.5*sum((params[2:numDimensions] - alpha*params[1:numDimensions-1])**2)/(1. - alpha**2)
 	return(logL)

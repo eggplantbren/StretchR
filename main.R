@@ -2,7 +2,7 @@
 # This just targets the posterior using emcee-style stretch moves
 source('model.R')
 
-numWalkers <- as.integer(100)
+numWalkers <- as.integer(2*numDimensions)
 if(numDimensions >= numWalkers)
 	print('WARNING: Use more walkers!')
 
@@ -20,7 +20,7 @@ for(i in 1:numWalkers)
 }
 
 # MCMC parameters
-steps <- as.integer(1000000)
+steps <- as.integer(200000*numWalkers)
 skip <- as.integer(100)
 
 # Storage
