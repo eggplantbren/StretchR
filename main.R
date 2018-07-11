@@ -21,7 +21,7 @@ for(i in 1:numWalkers)
 
 # MCMC parameters
 steps <- as.integer(200000*numWalkers)
-skip <- as.integer(1000)
+skip <- as.integer(steps/10000)
 
 # Storage
 keep <- array(NA, c(steps/skip, numDimensions))
@@ -31,8 +31,8 @@ accepts <- as.integer(0)
 # Main MCMC loop
 for(i in 1:steps)
 {
-	# Focus our attention on this walker, for this step
-	which <- (i-1) %% numWalkers + 1
+    # Which walker to save/plot
+    which = sample(1:numWalkers, 1)
 
 	# Plotting stuff
 	if(i%%skip == 0)
@@ -53,6 +53,9 @@ for(i in 1:steps)
 		print('Stdev of last 75% of run: ')
 		print(sd(keep[start:(i/skip), 1]))
 	}
+
+	# Which walker to move
+	which <- (i-1) %% numWalkers + 1
 	
 	# Do the stretch move
 	other <- sample(1:numWalkers, 1)
