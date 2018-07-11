@@ -20,7 +20,7 @@ for(i in 1:numWalkers)
 }
 
 # MCMC parameters
-steps <- as.integer(200000*numWalkers)
+steps <- as.integer(20000*numWalkers)
 skip <- as.integer(steps/10000)
 
 # Storage
@@ -47,10 +47,10 @@ for(i in 1:steps)
 		print(as.double(accepts)/tries)
 
 		# Ad-hoc burn-in discard
-		start = 1. + 0.25*(i/skip)
-		print('Mean of last 75% of run: ')
+		start = 1. + 0.5*(i/skip)
+		print('Mean of last 50% of run: ')
 		print(mean(keep[start:(i/skip), 1]))
-		print('Stdev of last 75% of run: ')
+		print('Stdev of last 50% of run: ')
 		print(sd(keep[start:(i/skip), 1]))
 	}
 

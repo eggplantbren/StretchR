@@ -1,5 +1,5 @@
 # This file contains functions that define what model we're working on.
-numDimensions <- as.integer(10)
+numDimensions <- as.integer(100)
 
 # Given a vector of parameters, evaluate the natural logarithm of the prior
 # probability density.
