@@ -32,7 +32,7 @@ accepts <- as.integer(0)
 for(i in 1:steps)
 {
 	# Focus our attention on this walker, for this step
-	which <- sample(1:numWalkers, 1)
+	which <- (i-1) %% numWalkers + 1
 
 	# Plotting stuff
 	if(i%%skip == 0)
